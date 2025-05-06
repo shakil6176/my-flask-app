@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inbox</title>
+</head>
+<body>
+    <h1>Your Inbox</h1>
+    <ul>
+        {% for mail in emails %}
+            <li>
+                <a href="/message/{{ mail.id }}">
+                    <strong>{{ mail.subject }}</strong> - {{ mail.from }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
