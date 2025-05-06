@@ -1,23 +1,35 @@
-<!-- templates/inbox.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Your Inbox</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Your Inbox</h1>
-    {% if emails %}
-        <ul>
-            {% for email in emails %}
-                <li>
-                    <a href="{{ url_for('view_message', msg_id=email.id) }}">
-                        <strong>{{ email.subject }}</strong> - {{ email.sender }}
-                    </a>
-                </li>
+    <div class="container">
+        <h1>Your Inbox</h1>
+        <div class="email-list">
+            {% for mail in emails %}
+                <div class="email-card" onclick="showContent({{ loop.index0 }})">
+                    <div class="subject">{{ mail.subject }}</div>
+                    <div class="sender">{{ mail.from }}</div>
+                </div>
+            {% else %}
+                <p>No emails yet.</p>
             {% endfor %}
-        </ul>
-    {% else %}
-        <p>No emails found.</p>
-    {% endif %}
+        </div>
+
+        <div class="email-content" id="emailContent">
+            <h2>Message</h2>
+            <div id="emailBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const contents = {{ bodies|tojson }};
+        function showContent(index) {
+            document.getElementById('emailBody').innerHTML = contents[index];
+        }
+    </script>
 </body>
 </html>

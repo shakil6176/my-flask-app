@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #444;
+}
+
+.email-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.email-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.email-card:hover {
+    background: #eaf0f6;
+}
+
+.subject {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.sender {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.email-content {
+    margin-top: 30px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}

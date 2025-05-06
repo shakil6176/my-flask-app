@@ -1,37 +1,20 @@
-from flask import Flask, render_template, request
-import uuid
+from flask import Flask, render_template, send_from_directory
+import os
+from inbox_parser import get_email_data  # Or however you're fetching mails
 
 app = Flask(__name__)
 
-emails = [
-    {
-        "id": str(uuid.uuid4()),
-        "subject": "Welcome!",
-        "sender": "admin@example.com",
-        "body": "Thanks for signing up. Enjoy our service!"
-    },
-    {
-        "id": str(uuid.uuid4()),
-        "subject": "OTP Code",
-        "sender": "noreply@service.com",
-        "body": "Your OTP is 735291. Please do not share it with anyone. Verify here: https://example.com/verify"
-    }
-]
-
-@app.route("/")
+@app.route('/')
 def inbox():
-    selected_email = None
-    selected_id = request.args.get("msg_id")
+    emails = get_email_data()  # Replace with your actual logic
+    subjects = [{'subject': m['subject'], 'from': m['from']} for m in emails]
+    bodies = [m['body'] for m in emails]
+    return render_template('inbox.html', emails=subjects, bodies=bodies)
 
-    if selected_id:
-        for email in emails:
-            if email["id"] == selected_id:
-                selected_email = email
-                break
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
 
-    return render_template("inbox_combined.html", emails=emails, selected_email=selected_email)
-
-if __name__ == "__main__":
-    import os
+if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host='0.0.0.0', port=port)
