@@ -1,28 +1,27 @@
-from flask import Flask, render_template, request
 import os
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# ডেমো ইনবক্স (পরে এটাতে আমরা API বা database ব্যবহার করব)
+# ইন-মেমোরি ইনবক্স
 inbox = [
-    {"id": "1", "from": "admin@example.com", "subject": "Welcome!", "content": "Welcome to your inbox."},
-    {"id": "2", "from": "noreply@service.com", "subject": "OTP Code", "content": "Your OTP is 123456"}
+    {"subject": "Welcome!", "sender": "admin@example.com"},
+    {"subject": "OTP Code", "sender": "noreply@service.com"},
 ]
 
-@app.route('/')
+@app.route("/")
 def home():
-    return "Hello from Flask on Render!"
+    return render_template("inbox.html", inbox=inbox)
 
-@app.route("/inbox")
-def show_inbox():
-    return render_template("inbox.html", emails=inbox)
+@app.route("/send", methods=["POST"])
+def send_email():
+    subject = request.form.get("subject")
+    sender = request.form.get("sender")
 
-@app.route("/message/<id>")
-def show_message(id):
-    for mail in inbox:
-        if mail["id"] == id:
-            return render_template("message.html", mail=mail)
-    return "Message not found", 404
+    if subject and sender:
+        inbox.append({"subject": subject, "sender": sender})
+
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
