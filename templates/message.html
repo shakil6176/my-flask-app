@@ -1,12 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Message</title>
+    <meta charset="UTF-8">
+    <title>Email from {{ email["from"] }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            max-width: 700px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .from, .subject {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .otp {
+            background: #dff0d8;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            margin: 20px 0;
+            font-size: 22px;
+            text-align: center;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        button.copy-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.copy-btn:hover {
+            background: #218838;
+        }
+
+        .body {
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>{{ mail.subject }}</h2>
-    <p><strong>From:</strong> {{ mail.from }}</p>
-    <p>{{ mail.content }}</p>
-    <a href="/inbox">⬅ Back to Inbox</a>
+    <div class="container">
+        <div class="from">From: {{ email["from"] }}</div>
+        <div class="subject">Subject: {{ email["subject"] }}</div>
+
+        {% if otp %}
+            <div class="otp" id="otp">{{ otp }}</div>
+            <button class="copy-btn" onclick="copyOTP()">Copy OTP</button>
+        {% endif %}
+
+        <div class="body">{{ email["body"] }}</div>
+    </div>
+
+    <script>
+        function copyOTP() {
+            const otpText = document.getElementById("otp").innerText;
+            navigator.clipboard.writeText(otpText).then(function() {
+                alert("OTP copied to clipboard!");
+            }, function(err) {
+                alert("Failed to copy OTP: " + err);
+            });
+        }
+    </script>
 </body>
 </html>
