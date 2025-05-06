@@ -6,54 +6,59 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
+            background-color: #f2f4f7;
             margin: 0;
             padding: 20px;
         }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
+
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
         }
+
+        .inbox {
+            max-width: 700px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
         .email {
-            background: #fafafa;
-            border-left: 5px solid #007bff;
-            margin-bottom: 20px;
-            padding: 15px 20px;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
         }
-        .email:hover {
-            background: #f0f8ff;
+
+        .email:last-child {
+            border-bottom: none;
         }
+
         .email strong {
             display: block;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-            color: #007bff;
+            font-size: 16px;
+            color: #222;
         }
-        .email small {
+
+        .email span {
             color: #555;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Your Inbox</h1>
-        {% for message in messages %}
-            <div class="email">
-                <strong>{{ message["subject"] }}</strong>
-                <small>From: {{ message["from"] }}</small>
-            </div>
-        {% endfor %}
+    <h1>Your Inbox</h1>
+    <div class="inbox">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="email">
+                    <strong>{{ msg.subject }}</strong>
+                    <span>{{ msg.from }}</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No messages found.</p>
+        {% endif %}
     </div>
 </body>
 </html>
