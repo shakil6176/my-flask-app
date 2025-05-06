@@ -1,0 +1,18 @@
+[
+    {
+      "subject": "Welcome!",
+      "from": "admin@example.com",
+      "body": "<p>Thank you for joining our service.</p>"
+    },
+    {
+      "subject": "OTP Code",
+      "from": "noreply@service.com",
+      "body": "<p>Your OTP code is <strong>548327</strong>. Please do not share it.</p>"
+    },
+    {
+      "subject": "Verify your account",
+      "from": "no-reply@example.com",
+      "body": "<p>Click the link to verify: <a href='https://example.com/verify?token=12345'>Verify Now</a></p>"
+    }
+  ]
+  

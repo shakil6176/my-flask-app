@@ -13,7 +13,7 @@
   </div>
 
   <div class="email-box">
-    <input type="text" id="emailAddress" value="demo@temp-mail.org" readonly>
+    <input type="text" id="emailAddress" value="{{ email }}" readonly>
     <button onclick="copyEmail()">Copy</button>
   </div>
 
@@ -31,16 +31,15 @@
     {% endif %}
   </div>
 
-  <div class="email-content" id="emailContent" style="display: none;">
+  <div class="email-content" id="emailContent">
     <h3>Message</h3>
     <div id="emailBody"></div>
   </div>
 
   <script>
-    const contents = {{ bodies|tojson | safe }};
+    const contents = {{ bodies|tojson }};
     function showContent(index) {
       document.getElementById("emailBody").innerHTML = contents[index];
-      document.getElementById("emailContent").style.display = "block";
     }
 
     function copyEmail() {
