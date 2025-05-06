@@ -1,51 +1,23 @@
+<!-- templates/inbox.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Your Inbox</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eef2f5;
-            padding: 40px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        .email {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .email:last-child {
-            border-bottom: none;
-        }
-        .email .subject {
-            font-weight: bold;
-        }
-        .email .sender {
-            color: #666;
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
-<div class="container">
     <h1>Your Inbox</h1>
-    {% for mail in inbox %}
-        <div class="email">
-            <div class="subject">{{ mail.subject }}</div>
-            <div class="sender">{{ mail.sender }}</div>
-        </div>
-    {% endfor %}
-</div>
+    {% if emails %}
+        <ul>
+            {% for email in emails %}
+                <li>
+                    <a href="{{ url_for('view_message', msg_id=email.id) }}">
+                        <strong>{{ email.subject }}</strong> - {{ email.sender }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No emails found.</p>
+    {% endif %}
 </body>
 </html>

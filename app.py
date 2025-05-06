@@ -20,6 +20,7 @@ emails = [
     }
 ]
 
+
 @app.route("/")
 def inbox():
     return render_template("inbox.html", emails=emails)
