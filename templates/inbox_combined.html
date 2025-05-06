@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Inbox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .email-list {
+            margin-bottom: 40px;
+        }
+        .email-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .email-list li {
+            margin: 10px 0;
+        }
+        .email-body {
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Inbox</h1>
+    <div class="email-list">
+        <ul>
+            {% for email in emails %}
+                <li>
+                    <a href="/?msg_id={{ email.id }}">
+                        <strong>{{ email.subject }}</strong> - {{ email.sender }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if selected_email %}
+        <div class="email-body">
+            <h2>{{ selected_email.subject }}</h2>
+            <p><strong>From:</strong> {{ selected_email.sender }}</p>
+            <p>{{ selected_email.body }}</p>
+        </div>
+    {% endif %}
+</body>
+</html>

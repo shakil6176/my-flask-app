@@ -1,10 +1,8 @@
 from flask import Flask, render_template, request
-import re
 import uuid
 
 app = Flask(__name__)
 
-# ডেমো ইনবক্স ডেটা
 emails = [
     {
         "id": str(uuid.uuid4()),
@@ -16,26 +14,22 @@ emails = [
         "id": str(uuid.uuid4()),
         "subject": "OTP Code",
         "sender": "noreply@service.com",
-        "body": "Your OTP is 735291. Please do not share it with anyone."
+        "body": "Your OTP is 735291. Please do not share it with anyone. Verify here: https://example.com/verify"
     }
 ]
 
-
 @app.route("/")
 def inbox():
-    return render_template("inbox.html", emails=emails)
+    selected_email = None
+    selected_id = request.args.get("msg_id")
 
-@app.route("/message/<msg_id>")
-def view_message(msg_id):
-    email = next((msg for msg in emails if msg["id"] == msg_id), None)
-    if not email:
-        return "Email not found", 404
+    if selected_id:
+        for email in emails:
+            if email["id"] == selected_id:
+                selected_email = email
+                break
 
-    # OTP বের করি (4 থেকে 8 ডিজিট পর্যন্ত)
-    otp_match = re.search(r"\b\d{4,8}\b", email["body"])
-    otp = otp_match.group(0) if otp_match else None
-
-    return render_template("message.html", email=email, otp=otp)
+    return render_template("inbox_combined.html", emails=emails, selected_email=selected_email)
 
 if __name__ == "__main__":
     import os
