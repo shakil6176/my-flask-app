@@ -5,60 +5,47 @@
     <title>Your Inbox</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f2f4f7;
-            margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #eef2f5;
+            padding: 40px;
         }
-
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
         h1 {
-            text-align: center;
             color: #333;
         }
-
-        .inbox {
-            max-width: 700px;
-            margin: 30px auto;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
         .email {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
         }
-
         .email:last-child {
             border-bottom: none;
         }
-
-        .email strong {
-            display: block;
-            font-size: 16px;
-            color: #222;
+        .email .subject {
+            font-weight: bold;
         }
-
-        .email span {
-            color: #555;
+        .email .sender {
+            color: #666;
             font-size: 14px;
         }
     </style>
 </head>
 <body>
+<div class="container">
     <h1>Your Inbox</h1>
-    <div class="inbox">
-        {% if messages %}
-            {% for msg in messages %}
-                <div class="email">
-                    <strong>{{ msg.subject }}</strong>
-                    <span>{{ msg.from }}</span>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No messages found.</p>
-        {% endif %}
-    </div>
+    {% for mail in inbox %}
+        <div class="email">
+            <div class="subject">{{ mail.subject }}</div>
+            <div class="sender">{{ mail.sender }}</div>
+        </div>
+    {% endfor %}
+</div>
 </body>
 </html>
