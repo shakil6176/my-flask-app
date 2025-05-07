@@ -2,126 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Temp Mail - Inbox</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f6f8;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.08);
-            border-radius: 8px;
-        }
-
-        .title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .email-box {
-            background: #f9f9f9;
-            border: 1px solid #e1e1e1;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .email-box:hover {
-            background: #eef6ff;
-            border-color: #c3dafe;
-        }
-
-        .email-header {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .email-body {
-            margin-top: 5px;
-            line-height: 1.5;
-        }
-
-        .email-subject {
-            color: #3b82f6;
-        }
-
-        .copy-btn {
-            margin: 20px auto 30px;
-            display: block;
-            padding: 10px 20px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .copy-btn:hover {
-            background: #1d4ed8;
-        }
-
-        .email {
-            font-size: 18px;
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 14px;
-            color: #aaa;
-        }
-    </style>
+    <title>Your Inbox</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <div class="container">
-        <div class="title">📬 Your Temporary Inbox</div>
-        
-        <div class="email" id="currentEmail">{{ emails[0]['to'] if emails else 'loading@temp-mail.org' }}</div>
-        <button class="copy-btn" onclick="copyEmail()">📋 Copy Email Address</button>
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Temp Mail</a>
+        </div>
+    </nav>
 
-        {% for email in emails %}
-            <div class="email-box">
-                <div class="email-header">
-                    <span>📤 From: {{ email['from'] }}</span>
-                    <span class="email-subject">{{ email['subject'] }}</span>
+    <!-- Email Box -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="input-group mb-4">
+                    <input type="text" class="form-control" placeholder="Enter Email" id="email-input">
+                    <button class="btn btn-primary" id="generate-email">Generate Email</button>
                 </div>
-                <div class="email-body">{{ email['body'] }}</div>
             </div>
-        {% else %}
-            <p style="text-align:center; margin-top: 20px;">No emails yet.</p>
-        {% endfor %}
+        </div>
+
+        <!-- Inbox Section -->
+        <div class="inbox-section shadow p-4 rounded">
+            <h2 class="mb-3">Your Inbox</h2>
+            <div class="list-group" id="email-list">
+                {% for mail in emails %}
+                    <a href="#" class="list-group-item list-group-item-action email-item" onclick="showContent({{ loop.index0 }})">
+                        <div class="d-flex justify-content-between">
+                            <strong class="subject">{{ mail.subject }}</strong>
+                            <span class="text-muted">{{ mail.from }}</span>
+                        </div>
+                    </a>
+                {% else %}
+                    <p>No emails yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Email Content -->
+        <div class="email-content mt-5 shadow p-4 rounded">
+            <h2>Message</h2>
+            <div id="email-body"></div>
+        </div>
     </div>
 
-    <div class="footer">Made with ❤️ | temp-mail by shakil</div>
-
     <script>
-        function copyEmail() {
-            const emailText = document.getElementById("currentEmail").textContent;
-            navigator.clipboard.writeText(emailText).then(() => {
-                alert("Copied: " + emailText);
-            });
+        const contents = {{ bodies|tojson }};
+        function showContent(index) {
+            document.getElementById('email-body').innerHTML = contents[index];
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
