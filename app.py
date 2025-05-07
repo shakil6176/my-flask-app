@@ -1,21 +1,40 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 import os
-import json
+import random
 
 app = Flask(__name__)
 
-# Load emails from mock JSON file (you can replace this with real email fetch logic)
-def load_emails():
-    with open('emails.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    return data
+# Dummy global store (তোমার পরে ডাটাবেজে রাখতে পারো)
+emails = [
+    {'from': 'example1@domain.com', 'subject': 'Welcome!', 'body': 'Hello, welcome to our service.'},
+    {'from': 'example2@domain.com', 'subject': 'Verification', 'body': 'Please verify your email address.'}
+]
+
+email_domains = ["tempmail.com", "mailjunk.io", "fakemail.org"]
 
 @app.route('/')
-def inbox():
-    emails = load_emails()
-    bodies = [email['body'] for email in emails]
-    return render_template('index.html', emails=emails, bodies=bodies)
+def index():
+    return render_template('index.html', emails=emails)
 
-if __name__ == "__main__":
+@app.route('/generate_email')
+def generate_email():
+    username = f"user{random.randint(1000, 9999)}"
+    domain = random.choice(email_domains)
+    new_email = f"{username}@{domain}"
+    return jsonify({'email': new_email})
+
+@app.route('/delete_emails')
+def delete_emails():
+    global emails
+    emails = []
+    return jsonify({'message': 'Inbox cleared', 'emails': emails})
+
+@app.route('/refresh_emails')
+def refresh_emails():
+    # Demo ইনবক্স (পরে লাইভ ডেটা দিবে)
+    global emails
+    return jsonify({'emails': emails})
+
+if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)

@@ -2,93 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Temp Mail UI</title>
+    <title>Temporary Email</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 700px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #ccc;
-        }
-        .email-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .email-address {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .btn-group button {
-            margin-left: 5px;
-            padding: 5px 10px;
-        }
-        .inbox {
-            margin-top: 20px;
-        }
-        .email-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .subject {
-            font-weight: bold;
-        }
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #email-box { margin-bottom: 20px; }
+        button { margin-right: 10px; }
+        .email-item { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
     </style>
+</head>
+<body>
+
+    <h1>📬 Your Temporary Email</h1>
+
+    <div id="email-box">
+        <input type="text" id="email-address" value="user@tempmail.com" readonly style="width:300px;">
+        <button onclick="copyEmail()">📋 Copy</button>
+        <button onclick="changeEmail()">🔄 Change</button>
+        <button onclick="deleteEmails()">🗑 Delete</button>
+        <button onclick="refreshEmails()">🔃 Refresh</button>
+    </div>
+
+    <h2>📥 Inbox</h2>
+    <div id="inbox">
+        {% for email in emails %}
+            <div class="email-item">
+                <strong>From:</strong> {{ email.from }}<br>
+                <strong>Subject:</strong> {{ email.subject }}<br>
+                <strong>Body:</strong> {{ email.body }}
+            </div>
+        {% endfor %}
+    </div>
+
     <script>
         function copyEmail() {
-            const emailText = document.getElementById("email-address").innerText;
-            navigator.clipboard.writeText(emailText).then(() => {
-                alert("Email copied: " + emailText);
-            });
+            const emailInput = document.getElementById("email-address");
+            emailInput.select();
+            document.execCommand("copy");
+            alert("Copied: " + emailInput.value);
         }
 
         function changeEmail() {
-            alert("Email changed! (এখানে AJAX বা API বসবে)");
-            // location.reload(); // Future logic
+            fetch('/generate_email')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("email-address").value = data.email;
+                    alert("New email: " + data.email);
+                });
         }
 
         function deleteEmails() {
-            alert("All emails deleted and new address created.");
-            // Future: implement actual delete and refresh
+            fetch('/delete_emails')
+                .then(res => res.json())
+                .then(data => {
+                    const inbox = document.getElementById("inbox");
+                    inbox.innerHTML = '<p>No emails yet.</p>';
+                    alert(data.message);
+                });
         }
 
-        function refreshInbox() {
-            location.reload();
+        function refreshEmails() {
+            fetch('/refresh_emails')
+                .then(res => res.json())
+                .then(data => {
+                    const inbox = document.getElementById("inbox");
+                    inbox.innerHTML = '';
+                    if (data.emails.length === 0) {
+                        inbox.innerHTML = '<p>No emails yet.</p>';
+                    } else {
+                        data.emails.forEach(email => {
+                            const div = document.createElement('div');
+                            div.className = 'email-item';
+                            div.innerHTML = `<strong>From:</strong> ${email.from}<br>
+                                             <strong>Subject:</strong> ${email.subject}<br>
+                                             <strong>Body:</strong> ${email.body}`;
+                            inbox.appendChild(div);
+                        });
+                    }
+                });
         }
     </script>
-</head>
-<body>
-    <div class="container">
-        <div class="email-box">
-            <span id="email-address" class="email-address">example@yourdomain.com</span>
-            <div class="btn-group">
-                <button onclick="copyEmail()">Copy</button>
-                <button onclick="changeEmail()">Change</button>
-                <button onclick="deleteEmails()">Delete</button>
-                <button onclick="refreshInbox()">Refresh</button>
-            </div>
-        </div>
 
-        <div class="inbox">
-            <h3>Inbox</h3>
-            {% for email in emails %}
-                <div class="email-item">
-                    <div><strong>From:</strong> {{ email.from }}</div>
-                    <div class="subject">{{ email.subject }}</div>
-                    <div>{{ email.body }}</div>
-                </div>
-            {% else %}
-                <p>No emails found.</p>
-            {% endfor %}
-        </div>
-    </div>
 </body>
 </html>
