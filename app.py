@@ -5,11 +5,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    emails = [
-        {'from': 'example1@domain.com', 'subject': 'Welcome!', 'body': 'Hello, welcome to our service.'},
-        {'from': 'example2@domain.com', 'subject': 'Verification', 'body': 'Please verify your email address.'}
-    ]
-    return render_template('index.html', emails=emails)
+    emails = load_emails()
+    bodies = [email['body'] for email in emails]
+    return render_template('index.html', emails=emails, bodies=bodies)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
