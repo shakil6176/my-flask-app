@@ -1,94 +1,108 @@
+/* Reset and basic styles */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-  }
-  
-  .header {
-    background-color: #3c40c6;
-    color: white;
-    text-align: center;
-    padding: 30px 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-  
-  .header h1 {
-    margin: 0;
-    font-size: 32px;
-  }
-  
-  .header p {
-    margin: 5px 0 0;
-    font-size: 14px;
-  }
-  
-  .email-box {
-    margin: 20px auto;
-    text-align: center;
-  }
-  
-  .email-box input {
-    padding: 10px;
-    font-size: 16px;
-    width: 300px;
-    max-width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .email-box button {
-    padding: 10px 15px;
-    margin-left: 10px;
-    font-size: 16px;
-    background-color: #3c40c6;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .inbox-section {
-    max-width: 700px;
-    margin: 30px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 6px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-  
-  .inbox-section h2 {
-    margin-top: 0;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-  }
-  
-  .email-item {
-    border-bottom: 1px solid #eee;
-    padding: 10px 0;
-    cursor: pointer;
-  }
-  
-  .email-item:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .subject {
-    font-weight: bold;
-    color: #3c40c6;
-  }
-  
-  .from {
-    font-size: 12px;
-    color: #666;
-  }
-  
-  .email-content {
-    max-width: 700px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 15px;
-    border-radius: 6px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  }
-  
-  
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9f9;
+  color: #333;
+}
+
+.header {
+  background: #3c40c6;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 15px;
+}
+
+.email-box {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.email-address {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.email-address input {
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.email-address button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background: #3c40c6;
+  color: white;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.inbox-section {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.email-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.email-item:hover {
+  background: #f1f1f1;
+}
+
+.subject {
+  font-weight: bold;
+  color: #3c40c6;
+}
+
+.from {
+  font-size: 13px;
+  color: #555;
+}
+
+.email-content {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  background: #f0f0f0;
+  margin-top: 40px;
+}
