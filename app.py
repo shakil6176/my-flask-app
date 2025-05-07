@@ -14,7 +14,7 @@ def load_emails():
 def inbox():
     emails = load_emails()
     bodies = [email['body'] for email in emails]
-    return render_template('inbox.html', emails=emails, bodies=bodies)
+    return render_template('index.html', emails=emails, bodies=bodies)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
