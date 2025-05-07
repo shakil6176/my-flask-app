@@ -1,21 +1,14 @@
 from flask import Flask, render_template
-import os
-import json
 
 app = Flask(__name__)
 
-# Load emails from mock JSON file (you can replace this with real email fetch logic)
-def load_emails():
-    with open('emails.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    return data
-
 @app.route('/')
-def inbox():
-    emails = load_emails()
-    bodies = [email['body'] for email in emails]
-    return render_template('index.html', emails=emails, bodies=bodies)
+def index():
+    emails = [
+        {'from': 'example1@domain.com', 'subject': 'Welcome!', 'body': 'Hello, welcome to our service.'},
+        {'from': 'example2@domain.com', 'subject': 'Verification', 'body': 'Please verify your email address.'}
+    ]
+    return render_template('index.html', emails=emails)
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    app.run(debug=True)

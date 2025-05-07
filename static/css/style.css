@@ -1,108 +1,63 @@
-/* Reset and basic styles */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #f9f9f9;
-  color: #333;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
 }
 
-.header {
-  background: #3c40c6;
+header {
+  background-color: #3c40c6;
   color: white;
   padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.nav a {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 30px 15px;
-}
-
-.email-box {
   text-align: center;
-  margin-bottom: 30px;
 }
 
-.email-address {
+main {
+  padding: 20px;
+}
+
+.email-address-section, .inbox-section, .email-content-section {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.email-address-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.email-address input {
+.email-address-container input {
+  flex: 1;
   padding: 10px;
   font-size: 16px;
-  width: 300px;
-  border: 1px solid #ccc;
-  border-right: none;
-  border-radius: 5px 0 0 5px;
 }
 
-.email-address button {
-  padding: 10px 15px;
+.email-address-container button {
+  padding: 10px;
   font-size: 16px;
-  background: #3c40c6;
+  cursor: pointer;
+}
+
+.inbox-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inbox-section th, .inbox-section td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.inbox-section th {
+  background-color: #f2f2f2;
+}
+
+footer {
+  background-color: #3c40c6;
   color: white;
-  border: none;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-}
-
-.inbox-section {
-  background: white;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-}
-
-.email-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-}
-
-.email-item:hover {
-  background: #f1f1f1;
-}
-
-.subject {
-  font-weight: bold;
-  color: #3c40c6;
-}
-
-.from {
-  font-size: 13px;
-  color: #555;
-}
-
-.email-content {
-  background: white;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-
-.footer {
   text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  background: #f0f0f0;
-  margin-top: 40px;
+  padding: 10px;
 }

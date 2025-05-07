@@ -1,68 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Temp Mail</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Mail Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <header class="header">
-    <div class="logo">Temp Mail</div>
-    <nav class="nav">
-      <a href="#">Home</a>
-      <a href="#">How It Works</a>
-      <a href="#">FAQ</a>
-    </nav>
-  </header>
-
-  <main class="main">
-    <section class="email-box">
-      <h1>Your Temporary Email Address</h1>
-      <div class="email-address">
-        <input type="text" id="email" value="user@yourdomain.com" readonly />
-        <button onclick="copyEmail()">Copy</button>
-      </div>
-      <p>This email will auto-refresh and receive messages here.</p>
-    </section>
-
-    <section class="inbox-section">
-      <h2>Inbox</h2>
-      <div id="inbox-list">
-        {% for mail in emails %}
-          <div class="email-item" onclick="showContent({{ loop.index0 }})">
-            <div class="subject">{{ mail.subject }}</div>
-            <div class="from">{{ mail.from }}</div>
-          </div>
-        {% else %}
-          <p>No emails yet.</p>
-        {% endfor %}
-      </div>
-    </section>
-
-    <section class="email-content" id="emailContent">
-      <h2>Message</h2>
-      <div id="emailBody">Click on an email to view its content.</div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>© 2025 Temp Mail Clone. All rights reserved.</p>
-  </footer>
-
-  <script>
-    const contents = {{ bodies|tojson }};
-    function showContent(index) {
-      document.getElementById('emailBody').innerHTML = contents[index];
-    }
-
-    function copyEmail() {
-      const email = document.getElementById("email");
-      email.select();
-      document.execCommand("copy");
-      alert("Email copied: " + email.value);
-    }
-  </script>
+    <header>
+        <h1>Temp Mail</h1>
+    </header>
+    <main>
+        <section class="email-address-section">
+            <h2>Your Temporary Email Address</h2>
+            <div class="email-address-container">
+                <input type="text" id="emailAddress" value="user@tempmail.com" readonly>
+                <button onclick="copyEmail()">Copy</button>
+                <button onclick="refreshEmail()">Refresh</button>
+                <button onclick="changeEmail()">Change</button>
+                <button onclick="deleteEmail()">Delete</button>
+            </div>
+        </section>
+        <section class="inbox-section">
+            <h2>Inbox</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sender</th>
+                        <th>Subject</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for email in emails %}
+                    <tr>
+                        <td>{{ email.from }}</td>
+                        <td>{{ email.subject }}</td>
+                        <td><button onclick="viewEmail({{ loop.index0 }})">View</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <section class="email-content-section" id="emailContent">
+            <h2>Email Content</h2>
+            <p id="emailBody">Click on 'View' to read the email.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Temp Mail Clone. All rights reserved.</p>
+    </footer>
+    <script>
+        const emails = {{ emails|tojson }};
+        function copyEmail() {
+            const emailInput = document.getElementById("emailAddress");
+            emailInput.select();
+            document.execCommand("copy");
+            alert("Email address copied to clipboard.");
+        }
+        function refreshEmail() {
+            alert("Email address refreshed.");
+        }
+        function changeEmail() {
+            alert("Email address changed.");
+        }
+        function deleteEmail() {
+            alert("Email address deleted.");
+        }
+        function viewEmail(index) {
+            const email = emails[index];
+            document.getElementById("emailBody").innerText = email.body;
+        }
+    </script>
 </body>
 </html>
